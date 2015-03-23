@@ -21685,23 +21685,27 @@ function renderActive() {
 
     $('.slot').removeClass('slot-active');
 
-    var selector = '#{fnName} [data-pos="{pos}"]'
-        .replace('{fnName}', fnName)
-        .replace('{pos}', position);
+    if (state.running) {
+        var selector = '#{fnName} [data-pos="{pos}"]'
+            .replace('{fnName}', fnName)
+            .replace('{pos}', position);
 
-    $(selector).addClass('slot-active');
+        $(selector).addClass('slot-active');
+    }
 }
 
 renderFunctions();
 
 setInterval(function() {
+    renderActive();
+    
     if (state.running) {
         var newLevel = game.step(state);
         valid.level(state);
         state = newLevel; // if it throws it won't be reached
     }
+    
     renderButton();
-    renderActive();
     render.level(state, document.getElementById('canvas'));
 }, 500);
 
