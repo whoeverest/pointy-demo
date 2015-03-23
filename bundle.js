@@ -21604,6 +21604,8 @@ return jQuery;
 var _ = require('lodash');
 var $ = require('jquery');
 
+window.$ = $;
+
 var valid = require('./validation.js');
 var levels = require('./levels.js');
 var game = require('./game.js');
@@ -21621,7 +21623,7 @@ function renderFunctions() {
     console.log('rend fu');
 
     $('#container #functions').remove();
-    $('#container').append(gui.template.functions(state.functions));
+    $('#container').append(gui.template.functions(state.functions, state.currentCommand));
 
     $('#functions .slot-empty').on('dragover', function(ev) {
         ev.preventDefault();
@@ -21677,6 +21679,19 @@ function renderButton() {
     });
 }
 
+function renderActive() {
+    var fnName = state.currentCommand.fnName;
+    var position = state.currentCommand.position;
+
+    $('.slot').removeClass('slot-active');
+
+    var selector = '#{fnName} [data-pos="{pos}"]'
+        .replace('{fnName}', fnName)
+        .replace('{pos}', position);
+
+    $(selector).addClass('slot-active');
+}
+
 renderFunctions();
 
 setInterval(function() {
@@ -21686,6 +21701,7 @@ setInterval(function() {
         state = newLevel; // if it throws it won't be reached
     }
     renderButton();
+    renderActive();
     render.level(state, document.getElementById('canvas'));
 }, 500);
 
@@ -21904,16 +21920,16 @@ var $ = require('jquery');
 var _ = require('lodash');
 
 var template = {
-    functions: function(functions) {
+    functions: function(functions, currentCommand) {
         var $containerEl = $('<div/>').attr('id', 'functions');
 
-        _.forEach(functions, function(fn, fnName) {
-            $containerEl.append(template.fn(fnName, fn));
+        _.forEach(functions, function(fnData, fnName) {
+            $containerEl.append(template.fn(fnName, fnData, currentCommand));
         });
 
         return $containerEl;
     },
-    fn: function(fnName, fnData) {
+    fn: function(fnName, fnData, currentCommand) {
         var $containerEl = $('<div/>').addClass('function').attr('id', fnName);
         $containerEl.append($('<div/>').addClass('function-name').text(fnName));
 

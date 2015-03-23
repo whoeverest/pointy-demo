@@ -57,6 +57,9 @@ canvas {
 	border-left: 1px solid gray;
 	border-top: 1px solid gray;
 }
+.slot-active {
+	font-weight: bold;
+}
 #run-stop {
 	position: absolute;
 	width: 295px;
