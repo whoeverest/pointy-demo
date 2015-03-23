@@ -21926,7 +21926,6 @@ var template = {
             if (i < numFns) {
                 $slotEl.text(fnData.commands[i]);
                 $slotEl.addClass('slot-full');
-                $slotEl.attr('draggable', 'true');
                 $slotEl.attr('data-pos', i);
             } else {
                 $slotEl.addClass('slot-empty');
