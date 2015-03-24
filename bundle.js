@@ -21698,7 +21698,7 @@ renderFunctions();
 
 setInterval(function() {
     renderActive();
-    
+
     if (state.running) {
         var newLevel = game.step(state);
         valid.level(state);
@@ -21712,6 +21712,8 @@ setInterval(function() {
 $('#controls .control').on('dragstart', function(ev) {
     ev.originalEvent.dataTransfer.setData("cmdName", ev.target.id);
 });
+
+alert("* Drag and drop commands to program the robot\n* Click on a command to remove it\n\nActivate all the black squares");
 
 },{"./game.js":12,"./gui.js":13,"./levels.js":15,"./render.js":16,"./validation.js":17,"jquery":9,"lodash":10}],12:[function(require,module,exports){
 var _ = require('lodash');
